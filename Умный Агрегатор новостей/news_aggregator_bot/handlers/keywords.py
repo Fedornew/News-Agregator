@@ -151,7 +151,7 @@ async def process_keyword(message: types.Message, state: FSMContext):
         await state.clear()
 
 async def delete_keyword_callback(callback: types.CallbackQuery):
-    """Удалить ключевое слово"""
+    """удалить ключевое слово"""
     await callback.answer()
     try:
         data = callback.data

@@ -24,7 +24,7 @@ async def start_command(message: types.Message):
     await message.answer("Используйте кнопки ниже для быстрого доступа:", reply_markup=get_main_reply_keyboard())
 
 async def commands_button_handler(message: types.Message):
-    """📋 Команды"""
+    """📋 команды"""
     text = (
         "📋 Доступные команды:\n\n"
         "/start - Запустить бота\n\n"

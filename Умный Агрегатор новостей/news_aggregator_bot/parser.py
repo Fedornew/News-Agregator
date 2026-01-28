@@ -9,7 +9,7 @@ logging.basicConfig(level=logging.INFO)
 
 async def parse_news_from_url(url: str, site_id: int = None) -> List[Tuple[str, str, str]]:
     """
-    Новый улучшенный парсер новостей
+    улучшенный парсер новостей
     """
     try:
         headers = {
@@ -22,64 +22,64 @@ async def parse_news_from_url(url: str, site_id: int = None) -> List[Tuple[str, 
             'Upgrade-Insecure-Requests': '1',
         }
         
-        print(f"🔍 Начинаем парсинг сайта: {url}")
+        print(f"🔍 начинаем парсинг сайта: {url}")
         response = requests.get(url, headers=headers, timeout=15)
         response.raise_for_status()
         response.encoding = 'utf-8'
-        print(f"✅ Сайт загружен, статус: {response.status_code}, кодировка: {response.encoding}")
+        print(f"✅ сайт загружен, статус: {response.status_code}, кодировка: {response.encoding}")
 
         soup = BeautifulSoup(response.content, 'html.parser')
         news_items = []
 
-        print(f"🔍 Парсинг новостей с {url}")
+        print(f"🔍 парсинг новостей с {url}")
 
-        # Ищем все возможные ссылки на новости
+        # ищем все возможные ссылки на новости
         all_links = soup.find_all('a', href=True)
-        print(f"🔍 Найдено {len(all_links)} ссылок на странице")
+        print(f"🔍 найдено {len(all_links)} ссылок на странице")
 
         found_news_count = 0
-        processed_urls = set()  # Для избежания дубликатов
+        processed_urls = set()  # для избежания дубликатов
 
-        for i, link in enumerate(all_links[:100]):  # Проверяем первые 100 ссылок
+        for i, link in enumerate(all_links[:100]):  # проверяем первые 100 ссылок
             href = link.get('href')
             text = link.get_text(strip=True)
 
             if not href or not text or len(text) < 5:
                 continue
 
-            # Очищаем и нормализуем URL
+            # очищаем и нормализуем url
             href = clean_url(href, url)
             
-            # Проверяем на дубликаты
+            # проверяем на дубликаты
             if href in processed_urls:
                 continue
             processed_urls.add(href)
 
-            # Проверяем, является ли это ссылкой на новость
+            # проверяем, является ли это ссылкой на новость
             if is_news_link(href, url):
-                # Пытаемся извлечь контент новости
+                # пытаемся извлечь контент новости
                 content = await extract_news_content(href, text)
                 
-                # Если не удалось извлечь контент, используем заголовок как контент
+                # если не удалось извлечь контент, используем заголовок как контент
                 if not content or len(content) < 10:
                     content = text[:200]
 
-                # Очищаем заголовок
+                # очищаем заголовок
                 title = re.sub(r'\s+', ' ', text).strip()
 
                 news_items.append((title, href, content))
                 found_news_count += 1
-                print(f"✅ Найдена новость {found_news_count}: {title[:50]}...")
-                print(f"   URL: {href}")
-                print(f"   Content: {content[:100]}...")
+                print(f"✅ найдена новость {found_news_count}: {title[:50]}...")
+                print(f"   url: {href}")
+                print(f"   content: {content[:100]}...")
                 
-                if found_news_count >= 15:  # Ограничиваем количество найденных новостей
+                if found_news_count >= 15:  # ограничиваем количество найденных новостей
                     break
 
-        print(f"📊 Всего найдено новостей: {found_news_count}")
-        print(f"📊 Всего уникальных новостей: {len(news_items)}")
+        print(f"📊 всего найдено новостей: {found_news_count}")
+        print(f"📊 всего уникальных новостей: {len(news_items)}")
 
-        # Сохраняем новости в базу данных
+        # сохраняем новости в базу данных
         if site_id is not None:
             try:
                 from database import save_news_if_new
@@ -89,16 +89,16 @@ async def parse_news_from_url(url: str, site_id: int = None) -> List[Tuple[str, 
                     if saved:
                         saved_count += 1
 
-                print(f"✅ Сохранено {saved_count} новостей в базу данных")
+                print(f"✅ сохранено {saved_count} новостей в базу данных")
             except Exception as e:
-                print(f"⚠️ Предупреждение: не удалось сохранить новости в базу данных: {e}")
+                print(f"⚠️ предупреждение: не удалось сохранить новости в базу данных: {e}")
         else:
-            print("⚠️ Предупреждение: site_id не указан, новости не будут сохранены в базу данных")
+            print("⚠️ предупреждение: site_id не указан, новости не будут сохранены в базу данных")
 
         return news_items[:15]
 
     except Exception as e:
-        logging.error(f"❌ Ошибка парсинга {url}: {e}")
+        logging.error(f"❌ ошибка парсинга {url}: {e}")
         return []
 
 async def extract_news_content(news_url: str, fallback_title: str) -> Optional[str]:

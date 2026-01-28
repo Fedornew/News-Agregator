@@ -2,7 +2,7 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, ReplyKeybo
 from typing import List
 
 def get_main_menu_keyboard():
-    """Главная клавиатура меню"""
+    """главная клавиатура меню"""
     keyboard = [
         [InlineKeyboardButton(text="🌐 Управление сайтами", callback_data="manage_sites")],
         [InlineKeyboardButton(text="📰 Получить новости", callback_data="get_news")],
@@ -11,7 +11,7 @@ def get_main_menu_keyboard():
     return InlineKeyboardMarkup(inline_keyboard=keyboard)
 
 def get_sites_keyboard(sites: List[tuple]):
-    """Клавиатура для управления сайтами"""
+    """клавиатура для управления сайтами"""
     keyboard = []
     for site in sites:
         site_id, user_id, url, last_checked, created_at = site
@@ -24,7 +24,7 @@ def get_sites_keyboard(sites: List[tuple]):
     return InlineKeyboardMarkup(inline_keyboard=keyboard)
 
 def get_keywords_keyboard(keywords: List[tuple]):
-    """Клавиатура для управления ключевыми словами"""
+    """клавиатура для управления ключевыми словами"""
     keyboard = []
     for keyword in keywords:
         keyboard.append([
@@ -35,12 +35,12 @@ def get_keywords_keyboard(keywords: List[tuple]):
     return InlineKeyboardMarkup(inline_keyboard=keyboard)
 
 def get_back_keyboard():
-    """Клавиатура с кнопкой назад"""
+    """клавиатура с кнопкой назад"""
     keyboard = [[InlineKeyboardButton(text="⬅️ Назад", callback_data="back_to_main")]]
     return InlineKeyboardMarkup(inline_keyboard=keyboard)
 
 def get_news_keyboard():
-    """Клавиатура для получения новостей"""
+    """клавиатура для получения новостей"""
     keyboard = [
         [InlineKeyboardButton(text="🆕 Получить свежие новости", callback_data="fetch_news")],
         [InlineKeyboardButton(text="⬅️ Назад", callback_data="back_to_main")]
@@ -48,7 +48,7 @@ def get_news_keyboard():
     return InlineKeyboardMarkup(inline_keyboard=keyboard)
 
 def get_settings_keyboard():
-    """Клавиатура настроек"""
+    """клавиатура настроек"""
     keyboard = [
         [InlineKeyboardButton(text="⏰ Интервал проверки", callback_data="set_check_interval")],
         [InlineKeyboardButton(text="📊 Кол-во новостей", callback_data="set_max_news_count")],
@@ -58,11 +58,11 @@ def get_settings_keyboard():
     return InlineKeyboardMarkup(inline_keyboard=keyboard)
 
 def get_interval_keyboard():
-    """Клавиатура выбора интервала (deprecated)"""
+    """клавиатура выбора интервала (deprecated)"""
     return get_back_keyboard()
 
 def get_confirm_delete_keyboard():
-    """Клавиатура подтверждения удаления"""
+    """клавиатура подтверждения удаления"""
     keyboard = [
         [InlineKeyboardButton(text="✅ Да, удалить все", callback_data="confirm_delete_all")],
         [InlineKeyboardButton(text="❌ Отмена", callback_data="settings")]
@@ -70,7 +70,7 @@ def get_confirm_delete_keyboard():
     return InlineKeyboardMarkup(inline_keyboard=keyboard)
 
 def get_main_reply_keyboard():
-    """Reply клавиатура с основными командами"""
+    """reply клавиатура с основными командами"""
     keyboard = ReplyKeyboardMarkup(
         keyboard=[
             [KeyboardButton(text="📋 Команды")]

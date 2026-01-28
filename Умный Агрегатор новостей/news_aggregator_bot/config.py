@@ -1,13 +1,13 @@
 import os
 
-# Telegram Bot Token
-BOT_TOKEN = 'hi'  # Your bot token
+# токен бота в телеграме
+BOT_TOKEN = 'hi'  # токен бота
 
-# Database settings
+# настройки базы данных
 DATABASE_PATH = 'news_aggregator.db'
 
-# Scheduler settings
-DEFAULT_CHECK_INTERVAL = 5  # minutes (actual interval used in scheduler)
+# настройки планировщика
+DEFAULT_CHECK_INTERVAL = 5  # минуты (интервал проверки новостей)
 
-# Admin settings
-ADMIN_IDS = [7858389718]  # Replace with actual admin Telegram IDs
+# настройки админа
+ADMIN_IDS = []  # id админов в телеграме
